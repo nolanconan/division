@@ -10,22 +10,24 @@ pipeline {
     stages {
         stage('Téléchargement des sources') {
             steps {
-                  git branch: 'main', url: 'https://github.com/nolanconan/division.git'
+                  git branch: 'main', url: 'https://github.com/<nom_compte>/<nom_depot>.git'
             }
         }
         stage('Compilation des sources') {
             steps {
-                sh 'cd TCP && make division'
+                sh 'cd C && make build'
             }
         }
         stage('Vérification dynamique') {
             steps {
-                sh 'cd TCP && make testsuite'
+                sh 'cd C && make testsuite'
+                sh 'cd Python && make testsuite'
             }
         }
         stage('Analyse statique') {
             steps {
-                sh 'cd TCP && make analyse'
+                sh 'cd C && make analyse'
+                sh 'cd Python && make analyse'
             }
         }
     }
