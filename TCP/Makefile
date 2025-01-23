@@ -16,8 +16,8 @@ division: client_tcp_division.c serveur_tcp_division.c $(EXE_DIR) $(OBJS)
 analyse: $(SRCS)
 	cppcheck --error-exitcode=1 .
 	
-testsuite: build client_tcp_division.c
-	$(COMPILER) $(OBJS) client_tcp_division.c -lcunit -o $@
+testsuite: build testsuite.c 
+	$(COMPILER) $(OBJS) testsuite.c -lcunit -o $@
 	./$@
 
 tcp.o: tcp.c tcp.h
