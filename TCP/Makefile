@@ -13,7 +13,12 @@ division: client_tcp_division.c serveur_tcp_division.c $(EXE_DIR) $(OBJS)
 	$(COMPILER) erreur.o tcp.o nombre.o serveur_tcp_$@.c -o $(EXE_DIR)/$@/TCP/serveur_tcp_$@
 	chmod -R u+x $(EXE_DIR)/$@/TCP
 
-
+analyse: $(SRCS)
+	cppcheck --error-exitcode=1 .
+	
+testsuite: build client_tcp_division.c
+	$(COMPILER) $(OBJS) client_tcp_division.c -lcunit -o $@
+	./$@
 
 tcp.o: tcp.c tcp.h
 	$(COMPILER) -c tcp.c -o tcp.o
