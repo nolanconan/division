@@ -63,4 +63,3 @@ void fermer_connexion(SOCK* sock) {
       if (close(sock->descripteur) == -1) {
       traiter_erreur(__FUNCTION__);
 }
-
