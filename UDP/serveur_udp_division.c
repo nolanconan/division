@@ -8,8 +8,8 @@
 #include <netinet/in.h>
 
 int main(int argc, char** argv) {
-	//traiter_commande(/*A COMPLETER*/, argv[0], "<port>\nmauvais nombre d'arguments");
-	//traiter_commande(/*A COMPLETER*/, argv[0], "<port>\n<port> est un port non réservé");
+	traiter_commande(/*A COMPLETER*/, argv[0], "<port>\nmauvais nombre d'arguments");
+	traiter_commande(/*A COMPLETER*/, argv[0], "<port>\n<port> est un port non réservé");
 
 	/*A COMPLETER*/
 
