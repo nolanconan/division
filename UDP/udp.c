@@ -51,7 +51,7 @@ void recevoir_message(SOCK* dst, char * buffer) {
 
 /* Émettre un message */
 void envoyer_message(SOCK* dst, char * message) {
-	send(coucou)
+	send()
 	traiter_erreur(__FUNCTION__);
 }
 /* Fermer la connexion */
