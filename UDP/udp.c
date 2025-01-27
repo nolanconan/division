@@ -10,56 +10,52 @@
 
 /* Créer une socket */
 void creer_socket(char* adresseIP, int port, SOCK* sock) {
-      sock->descripteur = socket(AF_INET, SOCK_DGRAM, 0);
-    if (sock->descripteur == -1) {
-      traiter_erreur(__FUNCTION__);
-      /*A COMPLETER*/
-}
-      bzero(&sock->adresse, sizeof(sock->adresse));
-    sock->adresse.sin_family = AF_INET;
-    sock->adresse.sin_port = htons(port);
-    if (inet_aton(adresseIP, &sock->adresse.sin_addr) == 0) {
+	sock->sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+	traiter_erreur(__FUNCTION__);
 
+	// adresse et port reutilisable
+	int optval = 1;
+    	setsockopt(sock->sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
+	traiter_erreur(__FUNCTION__);
+
+	/*A COMPLETER*/
+
+	if (strcmp(adresseIP, "") != 0)
+		sock->adresse.sin_addr.s_addr = inet_addr(adresseIP);
+	else 
+		sock->adresse.sin_addr.s_addr = INADDR_ANY;
 }
+
 /* Attacher une socket */
 void attacher_socket(SOCK* sock) {
-      if (bind(sock->descripteur, (struct sockaddr*)&sock->adresse, sizeof(sock->adresse)) == -1) {
-      traiter_erreur(__FUNCTION__);
+	bind()
+	traiter_erreur(__FUNCTION__);
 }
 
-/*Initialiser la structure adresse client */
+/*Initialiser la structure adresse */
 void init_addr(SOCK* sock) {
-      bzero(&sock->adresse, sizeof(sock->adresse));
-    sock->adresse.sin_family = AF_INET;
-    sock->adresse.sin_addr.s_addr = htonl(INADDR_ANY);
-    traiter_erreur(__FUNCTION__);
+	memset(&sock->adresse, 0, sizeof(sock->adresse));
 }
 
 /* Dimensionner la file d'attente d'une socket */
 void dimensionner_file_attente_socket(int taille, SOCK* sock) {
-      if (listen(sock->descripteur, taille) == -1) {
-      traiter_erreur(__FUNCTION__);
+	listen(sock->sockfd, taille);
+	traiter_erreur(__FUNCTION__);
 }
 
 /* Recevoir un message */
 void recevoir_message(SOCK* dst, char * buffer) {
-      struct sockaddr_in src_addr;
-    socklen_t addr_len = sizeof(src_addr);
-    int recu = recvfrom(dst->descripteur, buffer, BUFSIZ, 0, (struct sockaddr*)&src_addr, &addr_len);
-    if (recu == -1) {
-      traiter_erreur(__FUNCTION__);
-      buffer[recu] = '\0';
+	receive()
+	traiter_erreur(__FUNCTION__);
 }
 
 /* Émettre un message */
 void envoyer_message(SOCK* dst, char * message) {
-      int envoye = sendto(dst->descripteur, message, strlen(message), 0, (struct sockaddr*)&dst->adresse, sizeof(dst->adresse));
-    if (envoye == -1) {
-      traiter_erreur(__FUNCTION__);
+	send()
+	traiter_erreur(__FUNCTION__);
 }
-
 /* Fermer la connexion */
 void fermer_connexion(SOCK* sock) {
-      if (close(sock->descripteur) == -1) {
-      traiter_erreur(__FUNCTION__);
+	close(sock->sockfd);
+	traiter_erreur(__FUNCTION__);
 }
